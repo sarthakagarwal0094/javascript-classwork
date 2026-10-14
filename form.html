@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form control</title>
+    <style>
+        form{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            font-size:large;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Information Form</h1>
+    <form >
+        
+        Student Name:<input type="text" id="st-name"><br><br>
+        Email:<input type="email" id="email"><br><br>
+        Password:<input type="password" id="pswd"><br><br>
+        Age:<input type="number" min="3" max="35" id="age"><br><br>
+        Mobile:<input type="tel" id="mobile"><br><br>
+        <label>Gender</label>
+        <input type="radio" name="gender" value="Male">Male
+        <input type="radio" name="gender" value="Female">Female
+        <input type="radio" name="gender" value="Other">Other
+        <br><br>
+
+        <label>Skills:</label>
+        <input type="checkbox" name="skills" value="HTML" >HTML
+        <input type="checkbox" name="skills" value="CSS" >CSS
+        <input type="checkbox" name="skills" value="Java Script" >Java Script
+        <br><br>
+        <label>Course</label>
+        <select id="course">
+            <option value="MCA" >MCA</option>
+            <option value="BCA">BCA</option>
+            <option value="Btech">Btech</option>
+        </select>
+        <br><br>
+        <label>Preferred Language</label>
+        <select id="language" multiple>
+            <option value="Python">Python</option>
+            <option value="Java">java</option>
+            <option value="C#">C#</option>
+            <option value="CPP">CPP</option>
+        </select>
+        <br><br>
+        Address:<textarea id="address"></textarea>
+        <br><br>
+        DOB:<input type="date" id="dob">
+        <br><br>
+        Preferred Time:<input type="time" id="time">
+        <br><br>
+        <label><input type="checkbox" id="agreement"> I accept the terms and conditions</label>
+        <br><br>
+        <label>Programming Skill Level(1-10)</label>
+        <input id="psl" type="range" min="1" max="10">
+        <br><br>
+        <label>Favourite Color</label>
+        <input type="color" id="color">
+        <br><br>
+        <label>File:</label>
+        <input type="file" id="file">
+        <br><br>
+        <label>Portfolio URL:</label>
+        <input type="url" id="portfolio">
+        <br><br>
+        <input type="hidden" id="formType" value="StudentRegistration">
+        <label>Search Topic:</label>
+        <input type="search" id="search">
+        <br><br>
+        <button type="button" onclick="show()">Read Form Values</button>
+        <button type="reset">Reset</button>
+        <pre id="output"></pre>
+    </form>
+
+   
+</body>
+</html>
+
+<script>
+function show(){
+    const stname=document.getElementById('st-name').value
+    const email=document.getElementById('email').value
+    const password=document.getElementById('pswd').value
+    const mobile=document.getElementById('mobile').value
+    const searchtopic=document.getElementById('search').value
+
+    const age=document.getElementById('age').value
+
+    const selectedGender = document.querySelector('input[name="gender"]:checked');
+
+    const gender = selectedGender ? selectedGender.value : "Not selected";
+
+    const selectedSkills = document.querySelectorAll('input[name="skills"]:checked');
+
+      const skills = Array.from(selectedSkills).map(function (checkbox) {
+        return checkbox.value;
+    });
+
+    const course = document.getElementById("course").value;
+    const languageSelect = document.getElementById("language");
+
+     const languages = Array.from(languageSelect.selectedOptions).map(
+        function (option) {
+            return option.value;
+        }
+    );
+
+    const address = document.getElementById("address").value;
+
+     const dob = document.getElementById("dob").value;
+    const preferredTime = document.getElementById("time").value;
+
+  
+    const agreement = document.getElementById("agreement").checked;
+
+    
+    const skillLevel = document.getElementById("psl").value;
+
+    
+    const favoriteColor = document.getElementById("color").value;
+
+    
+    const fileInput = document.getElementById("file");
+    const resumeName = fileInput.files.length > 0
+        ? fileInput.files[0].name
+        : "No file selected";
+
+
+    const portfolio = document.getElementById("portfolio").value;
+
+
+    const formType = document.getElementById("formType").value;
+
+    const student = {
+        name: stname,
+        email: email,
+        mobile: mobile,
+        age: age,
+        gender: gender,
+        skills: skills,
+        course: course,
+        languages: languages,
+        address: address,
+        dob: dob,
+        preferredTime: preferredTime,
+        agreement: agreement,
+        skillLevel: skillLevel,
+        favoriteColor: favoriteColor,
+        resumeName: resumeName,
+        portfolio: portfolio,
+       // searchTopic: searchTopic,
+        formType: formType
+    };
+
+    // Display the collected values
+    
+    //document.getElementById("output").textContent =
+       //JSON.stringify(student, null, 2);
+
+  //paragraph message
+let saluation="";
+if(gender=="Male"){
+    saluation+="Mr"
+}else{
+    saluation+="Ms."
+}
+
+let paraskill=""
+if(skills.length==1){
+    paraskill+="a skill" +skills[0]
+}else{
+    let temp=""
+    
+    
+    skills.forEach(element => {
+        temp+=element
+        
+    });
+    paraskill+="multiple skills as "+temp
+}
+
+let ms="";
+
+if(skills.length==1){
+    ms+=`You have selected a skill as`+skills[0]
+}else if(skills.length==2){
+    ms+=`You have selected  skills as ${skills[0]} and ${skills[1]}`
+}else{
+    let temp=""
+    
+    
+    skills.forEach(element =>{
+        temp+=element
+    })
+    ms+=`You have selected the skills as`+temp
+}
+
+
+document.getElementById("output").textContent=`Welcome ${stname} !
+${saluation} ${stname}, you are ${age} years old. We can contact to
+on your mobile number ${mobile} or at the address: ${address} or also
+can send the email to ${email}. It is good that you have ${paraskill}
+
+${ms}
+`
+console.log(skills)
+}
+</script>
